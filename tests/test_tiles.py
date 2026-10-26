@@ -47,6 +47,22 @@ class TileTests(unittest.TestCase):
         self.assertEqual(birch_zero["level"], 3)
         self.assertIsNone(birch_zero["species"]["birch"])
 
+    def test_days_are_the_issue_date_and_the_two_after(self):
+        records, centres = load()
+        extra = {**records[0], "date_ech": "2026-10-28"}
+        _, tiles = build_tiles(records + [extra], centres)
+        point = tiles["46_2"]["points"][0]
+        self.assertEqual(
+            [d["date"] for d in point["days"]], ["2026-10-25", "2026-10-26", "2026-10-27"]
+        )
+
+    def test_point_missing_an_issue_date_keeps_fewer_days(self):
+        records, centres = load()
+        records = [r for r in records if (r["code_zone"], r["date_ech"]) != ("03064", "2026-10-26")]
+        _, tiles = build_tiles(records, centres)
+        point = tiles["46_2"]["points"][0]
+        self.assertEqual([d["date"] for d in point["days"]], ["2026-10-25", "2026-10-27"])
+
     def test_negative_longitude_key(self):
         self.assertEqual(tile_key(47.2, -1.55), "47_-2")
         self.assertEqual(tile_key(46.768, 2.974), "46_2")

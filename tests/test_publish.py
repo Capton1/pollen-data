@@ -76,6 +76,17 @@ class PublishTests(unittest.TestCase):
             publish(manifest, tiles, self.out, None, min_points=3)
         self.assertFalse(self.out.exists())
 
+    def test_publish_refuses_dates_not_starting_at_issue(self):
+        manifest, tiles = make(3, dates=("2026-10-26", "2026-10-27", "2026-10-28"))
+        with self.assertRaises(ValueError):
+            publish(manifest, tiles, self.out, None, min_points=3)
+        self.assertFalse(self.out.exists())
+
+    def test_publish_refuses_gap_in_dates(self):
+        manifest, tiles = make(3, dates=("2026-10-25", "2026-10-26", "2026-10-28"))
+        with self.assertRaises(ValueError):
+            publish(manifest, tiles, self.out, None, min_points=3)
+
     def test_publish_writes_atomically(self):
         manifest, tiles = make(3)
         publish(manifest, tiles, self.out, None, min_points=3)

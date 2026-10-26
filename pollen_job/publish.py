@@ -1,6 +1,7 @@
 """Validate a computed forecast and publish it into a fresh output directory."""
 import json
 import shutil
+from datetime import date, timedelta
 from pathlib import Path
 
 MIN_POINTS = 30000
@@ -25,12 +26,16 @@ def _validate(
         raise ValueError(
             f"issued {manifest['issued']} is older than published {previous['issued']}"
         )
+    start = date.fromisoformat(manifest["issued"])
+    wanted = [(start + timedelta(days=n)).isoformat() for n in range(DAYS)]
     for point in points:
         dates = [day["date"] for day in point["days"]]
         if len(dates) != DAYS:
             raise ValueError(f"point {point['code']} has {len(dates)} days, expected {DAYS}")
         if len(set(dates)) != DAYS:
             raise ValueError(f"point {point['code']} repeats a date: {dates}")
+        if dates != wanted:
+            raise ValueError(f"point {point['code']} dates {dates}, expected {wanted}")
 
 
 def publish(

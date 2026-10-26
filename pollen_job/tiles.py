@@ -1,6 +1,6 @@
 """Group the Atmo index into one-degree tiles following data contract v1."""
 import math
-from datetime import datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 
 VERSION = 1
 MAX_UNMATCHED_SHARE = 0.01
@@ -13,6 +13,12 @@ SPECIES = {
     "ragweed": "code_ambr",
 }
 DAYS = 3
+
+
+def expected_dates(issued: str) -> list[str]:
+    """The `DAYS` consecutive dates starting at the issue date."""
+    start = date.fromisoformat(issued)
+    return [(start + timedelta(days=n)).isoformat() for n in range(DAYS)]
 
 
 def tile_key(lat: float, lon: float) -> str:
@@ -49,12 +55,16 @@ def build_tiles(
         )
 
     issued = min(r["date_ech"] for r in records)
+    wanted = expected_dates(issued)
     points_by_tile: dict[str, list[dict]] = {}
     for code in sorted(by_code):
         if code not in centres:
             continue
         name, lat, lon = centres[code]
-        days = sorted(by_code[code], key=lambda r: r["date_ech"])[:DAYS]
+        days = sorted(
+            (r for r in by_code[code] if r["date_ech"] in wanted),
+            key=lambda r: r["date_ech"],
+        )
         point = {
             "code": code,
             "name": name,
