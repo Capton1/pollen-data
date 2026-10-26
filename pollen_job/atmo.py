@@ -13,13 +13,20 @@ WFS_URL = (
 
 
 def fetch_atmo(fetch: Callable[[str], bytes], page_size: int = 10000) -> list[dict]:
-    """Return every feature's properties, paging until a short page."""
+    """Return every feature's properties, paging until a short page.
+
+    Raise ValueError when the server reports a total that differs from the count read.
+    """
     records: list[dict] = []
     start = 0
     while True:
         url = f"{WFS_URL}&count={page_size}&startIndex={start}"
-        features = json.loads(fetch(url))["features"]
+        page = json.loads(fetch(url))
+        features = page["features"]
         records.extend(f["properties"] for f in features)
         if len(features) < page_size:
+            total = page.get("numberMatched", page.get("totalFeatures"))
+            if isinstance(total, int) and total != len(records):
+                raise ValueError(f"read {len(records)} records, server reports {total}")
             return records
         start += page_size

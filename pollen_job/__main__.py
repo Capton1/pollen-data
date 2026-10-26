@@ -1,11 +1,14 @@
-"""Download the Atmo index and write manifest.json and tiles/ under --out."""
+"""Download the Atmo index and publish v1/fr/manifest.json and tiles/ under --out."""
 import argparse
 import json
+import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
 from .atmo import fetch_atmo
 from .communes import fetch_centres
+from .publish import publish
 from .tiles import build_tiles
 
 USER_AGENT = (
@@ -13,6 +16,7 @@ USER_AGENT = (
     "(KHTML, like Gecko) Version/17.0 Safari/605.1.15"
 )
 TIMEOUT_SECONDS = 60
+MANIFEST_URL = "https://capton1.github.io/pollen-data/v1/fr/manifest.json"
 
 
 def fetch(url: str) -> bytes:
@@ -21,11 +25,16 @@ def fetch(url: str) -> bytes:
         return response.read()
 
 
-def write_json(path: Path, data: dict) -> None:
-    path.write_text(
-        json.dumps(data, ensure_ascii=False, separators=(",", ":")) + "\n",
-        encoding="utf-8",
-    )
+def fetch_previous(fetch_url=fetch) -> dict | None:
+    """The live manifest, or None when none is published or it cannot be read."""
+    try:
+        return json.loads(fetch_url(MANIFEST_URL))
+    except urllib.error.HTTPError as error:
+        if error.code != 404:
+            print(f"previous manifest unreadable: {error}", file=sys.stderr)
+    except (OSError, ValueError) as error:
+        print(f"previous manifest unreadable: {error}", file=sys.stderr)
+    return None
 
 
 def main() -> None:
@@ -33,12 +42,13 @@ def main() -> None:
     parser.add_argument("--out", type=Path, required=True, help="output directory")
     out = parser.parse_args().out
 
-    manifest, tiles = build_tiles(fetch_atmo(fetch), fetch_centres(fetch))
+    records = fetch_atmo(fetch)
+    centres = fetch_centres(fetch)
+    unmatched = len({r["code_zone"] for r in records} - set(centres))
+    print(f"{unmatched} unmatched communes", file=sys.stderr)
 
-    (out / "tiles").mkdir(parents=True, exist_ok=True)
-    for key, tile in tiles.items():
-        write_json(out / "tiles" / f"{key}.json", tile)
-    write_json(out / "manifest.json", manifest)
+    manifest, tiles = build_tiles(records, centres)
+    publish(manifest, tiles, out, fetch_previous())
     print(
         f"{manifest['points']} points, {len(tiles)} tiles, issued {manifest['issued']}"
     )

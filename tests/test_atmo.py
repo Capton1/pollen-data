@@ -27,6 +27,17 @@ class FetchAtmoTests(unittest.TestCase):
         self.assertEqual(starts, [0, 10000, 20000])
         self.assertEqual(records[0], {"code_zone": "00000"})
 
+    def test_fetch_atmo_refuses_count_that_differs_from_reported_total(self):
+        body = json.loads(page(3))
+        body["numberMatched"] = 5
+        with self.assertRaises(ValueError):
+            fetch_atmo(lambda url: json.dumps(body).encode())
+
+    def test_fetch_atmo_accepts_count_equal_to_reported_total(self):
+        body = json.loads(page(3))
+        body["numberMatched"] = 3
+        self.assertEqual(len(fetch_atmo(lambda url: json.dumps(body).encode())), 3)
+
 
 if __name__ == "__main__":
     unittest.main()
