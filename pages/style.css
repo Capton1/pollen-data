@@ -33,7 +33,7 @@ main {
 h1 { font-size: 1.8rem; line-height: 1.2; margin: 0 0 4px; }
 h2 { font-size: 1.25rem; margin: 40px 0 8px; padding-top: 24px; border-top: 1px solid var(--rule); }
 h3 { font-size: 1.05rem; margin: 24px 0 4px; }
-p, li { margin: 0 0 12px; }
+p { margin: 0 0 12px; }
 a { color: var(--accent); }
 .meta, nav { color: var(--muted); font-size: 0.95rem; }
 nav a { margin-right: 12px; }

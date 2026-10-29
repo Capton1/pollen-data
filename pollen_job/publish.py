@@ -7,6 +7,8 @@ from pathlib import Path
 MIN_POINTS = 30000
 DAYS = 3
 LAYOUT = Path("v1") / "fr"
+# The app's privacy policy and support pages, published at the site root.
+PAGES = Path(__file__).resolve().parent.parent / "pages"
 
 
 def _write_json(path: Path, data: dict) -> None:
@@ -51,6 +53,7 @@ def publish(
     staging = out.with_suffix(".tmp")
     shutil.rmtree(staging, ignore_errors=True)
     try:
+        shutil.copytree(PAGES, staging)
         base = staging / LAYOUT
         (base / "tiles").mkdir(parents=True)
         for key, tile in tiles.items():

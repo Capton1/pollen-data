@@ -16,7 +16,7 @@ one file per whole degree of latitude and longitude.
 ## App pages
 
 `pages/` holds the app's privacy policy and support pages, in English and French.
-Each publish copies them next to the data, at
+`publish()` copies them into the site with the data, at
 <https://capton1.github.io/pollen-data/privacy/> and
 <https://capton1.github.io/pollen-data/support/>. The app's About screen and its
 App Store Connect record link to both, so a change to what the app sends or
