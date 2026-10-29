@@ -12,3 +12,19 @@ JSON files for the Pollen iOS app, published on GitHub Pages.
 
 The file format is `v1/fr/manifest.json` plus `v1/fr/tiles/<lat>_<lon>.json`,
 one file per whole degree of latitude and longitude.
+
+## Schedule and hosting
+
+- `publish.yml` runs daily at 11:30 and 13:30 UTC. Atmo publishes the new
+  index around 11:00 UTC; the second run catches a late publication and
+  accepts an unchanged issue date.
+- `keepalive.yml` runs monthly and calls `gh workflow enable publish.yml`
+  (`permissions: actions: write`). GitHub disables scheduled workflows on a
+  public repository after 60 days without activity; this keeps the schedule alive.
+- Scheduled workflows run only on the default branch, so `main` must be the
+  default branch.
+- The `github-pages` environment must allow deployments from `main`
+  (Settings, Environments, Deployment branches).
+- Only the `deploy` job holds `pages: write` and `id-token: write`.
+- A run is refused when any point's days are not exactly the issue date and the
+  two days after it.
