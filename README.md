@@ -13,6 +13,15 @@ JSON files for the Pollen iOS app, published on GitHub Pages.
 The file format is `v1/fr/manifest.json` plus `v1/fr/tiles/<lat>_<lon>.json`,
 one file per whole degree of latitude and longitude.
 
+## App pages
+
+`pages/` holds the app's privacy policy and support pages, in English and French.
+Each publish copies them next to the data, at
+<https://capton1.github.io/pollen-data/privacy/> and
+<https://capton1.github.io/pollen-data/support/>. The app's About screen and its
+App Store Connect record link to both, so a change to what the app sends or
+stores changes the privacy policy in the same release.
+
 ## Schedule and hosting
 
 - `publish.yml` runs daily at 11:30 and 13:30 UTC. Atmo publishes the new
