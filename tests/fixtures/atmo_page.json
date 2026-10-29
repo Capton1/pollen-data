@@ -1,0 +1,140 @@
+{
+ "type": "FeatureCollection",
+ "features": [
+  {
+   "type": "Feature",
+   "properties": {
+    "code_zone": "03064",
+    "lib_zone": "X03064",
+    "date_ech": "2026-10-25",
+    "code_qual": 1,
+    "code_aul": 1,
+    "code_boul": 1,
+    "code_oliv": 1,
+    "code_gram": 1,
+    "code_arm": 1,
+    "code_ambr": 1
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "code_zone": "03064",
+    "lib_zone": "X03064",
+    "date_ech": "2026-10-26",
+    "code_qual": 2,
+    "code_aul": 2,
+    "code_boul": 2,
+    "code_oliv": 2,
+    "code_gram": 2,
+    "code_arm": 2,
+    "code_ambr": 2
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "code_zone": "03064",
+    "lib_zone": "X03064",
+    "date_ech": "2026-10-27",
+    "code_qual": 0,
+    "code_aul": 0,
+    "code_boul": 0,
+    "code_oliv": 0,
+    "code_gram": 0,
+    "code_arm": 0,
+    "code_ambr": 0
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "code_zone": "46001",
+    "lib_zone": "X46001",
+    "date_ech": "2026-10-27",
+    "code_qual": 5,
+    "code_aul": 5,
+    "code_boul": 5,
+    "code_oliv": 5,
+    "code_gram": 5,
+    "code_arm": 5,
+    "code_ambr": 5
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "code_zone": "46001",
+    "lib_zone": "X46001",
+    "date_ech": "2026-10-26",
+    "code_qual": 4,
+    "code_aul": 4,
+    "code_boul": 4,
+    "code_oliv": 4,
+    "code_gram": 4,
+    "code_arm": 4,
+    "code_ambr": 4
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "code_zone": "46001",
+    "lib_zone": "X46001",
+    "date_ech": "2026-10-25",
+    "code_qual": 3,
+    "code_aul": 3,
+    "code_boul": 0,
+    "code_oliv": 3,
+    "code_gram": 3,
+    "code_arm": 3,
+    "code_ambr": 3
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "code_zone": "48001",
+    "lib_zone": "X48001",
+    "date_ech": "2026-10-25",
+    "code_qual": 6,
+    "code_aul": 6,
+    "code_boul": 6,
+    "code_oliv": 6,
+    "code_gram": 6,
+    "code_arm": 6,
+    "code_ambr": 6
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "code_zone": "48001",
+    "lib_zone": "X48001",
+    "date_ech": "2026-10-26",
+    "code_qual": 6,
+    "code_aul": 6,
+    "code_boul": 6,
+    "code_oliv": 6,
+    "code_gram": 6,
+    "code_arm": 6,
+    "code_ambr": 6
+   }
+  },
+  {
+   "type": "Feature",
+   "properties": {
+    "code_zone": "48001",
+    "lib_zone": "X48001",
+    "date_ech": "2026-10-27",
+    "code_qual": 6,
+    "code_aul": 6,
+    "code_boul": 6,
+    "code_oliv": 6,
+    "code_gram": 6,
+    "code_arm": 6,
+    "code_ambr": 6
+   }
+  }
+ ]
+}

@@ -1,0 +1,35 @@
+[
+ {
+  "code": "03064",
+  "nom": "Château-sur-Allier",
+  "centre": {
+   "type": "Point",
+   "coordinates": [
+    2.974,
+    46.768
+   ]
+  }
+ },
+ {
+  "code": "46001",
+  "nom": "Alpha",
+  "centre": {
+   "type": "Point",
+   "coordinates": [
+    1.5,
+    44.2
+   ]
+  }
+ },
+ {
+  "code": "48001",
+  "nom": "Beta",
+  "centre": {
+   "type": "Point",
+   "coordinates": [
+    3.1,
+    44.7
+   ]
+  }
+ }
+]
