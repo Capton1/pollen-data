@@ -42,6 +42,12 @@ class PublishTests(unittest.TestCase):
         )
         self.assertFalse(self.out.with_suffix(".tmp").exists())
 
+    def test_publish_includes_the_app_pages(self):
+        manifest, tiles = make(3)
+        publish(manifest, tiles, self.out, None, min_points=3)
+        for page in ("privacy/index.html", "support/index.html", "style.css"):
+            self.assertTrue((self.out / page).is_file(), page)
+
     def test_publish_refuses_too_few_points(self):
         manifest, tiles = make(29999)
         with self.assertRaises(ValueError):
